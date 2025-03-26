@@ -16,9 +16,9 @@ variables:
   project: '**/RoundTheCode.AzureTestProject.csproj'
 
 steps:
-- checkout: self
+- checkout: self  # self 리포지토리 체크아웃
   persistCredentials: true
-  fetchDepth: 0  # 전체 Git 히스토리 가져오기
+  fetchDepth: 0  # Git 히스토리 전체 가져오기
 
 - task: NuGetToolInstaller@1
   name: 'NuGetToolInstaller'
@@ -30,8 +30,8 @@ steps:
   inputs:
     command: 'restore'
     restoreSolution: '$(solution)'
-    feedsToUse: 'config'  # 'select' 대신 'config' 사용
-    nugetConfigPath: 'NuGet.config'  # NuGet 설정 파일 지정
+    feedsToUse: 'config'
+    nugetConfigPath: 'NuGet.config'
 
 - task: DotNetCoreCLI@2
   name: 'Tests'
