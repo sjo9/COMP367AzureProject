@@ -36,12 +36,10 @@ stages:
                   $ErrorActionPreference = "Stop"
                   Write-Host "Deploying application..."
                   
-                  # Ensure the deployment directory exists
                   if (!(Test-Path "$(DeploymentPath)")) {
                       New-Item -ItemType Directory -Path "$(DeploymentPath)" -Force
                   }
                   
-                  # Copy artifacts to deployment directory
                   Copy-Item "$(Pipeline.Workspace)\buildPipeline\AzureTestProject\*" "$(DeploymentPath)" -Recurse -Force
                   
                   Write-Host "Deployment complete."
