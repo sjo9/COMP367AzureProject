@@ -39,3 +39,23 @@ stages:
                   echo "Deployment complete."
                 displayName: 'Copy Build Artifacts to Deployment Directory'
                 workingDirectory: $(Pipeline.Workspace)
+
+Starting: Copy Build Artifacts to Deployment Directory
+==============================================================================
+Task         : Command line
+Description  : Run a command line script using Bash on Linux and macOS and cmd.exe on Windows
+Version      : 2.250.1
+Author       : Microsoft Corporation
+Help         : https://docs.microsoft.com/azure/devops/pipelines/tasks/utility/command-line
+==============================================================================
+Generating script.
+========================== Starting Command Output ===========================
+"C:\Windows\system32\cmd.exe" /D /E:ON /V:OFF /S /C "CALL "C:\azagent\A2\_work\_temp\d8f076c6-1ff4-4de6-baad-9f25f8c94cec.cmd""
+"Deploying application..."
+'New-Item' is not recognized as an internal or external command,
+operable program or batch file.
+'Copy-Item' is not recognized as an internal or external command,
+operable program or batch file.
+"Deployment complete."
+##[error]Cmd.exe exited with code '9009'.
+Finishing: Copy Build Artifacts to Deployment Directory
