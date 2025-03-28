@@ -25,7 +25,7 @@ stages:
     jobs:
     - deployment: DeployWebsite
       displayName: 'Deploy website'
-      environment: 'Windows 11 server.SeyeonJo'
+      environment: 'Windows 11 server.SEYEONJO'
       strategy:
        runOnce:
            deploy:
