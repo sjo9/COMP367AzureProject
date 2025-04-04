@@ -10,3 +10,5 @@
 2025-04-04T23:34:05.6025097Z ==============================================================================
 2025-04-04T23:34:15.4043576Z ##[error]Cannot find appcmd.exe location. Verify IIS is configured on DESLAB-006 and try operation again.
 2025-04-04T23:34:15.4793639Z ##[section]Finishing: IIS Web App Manage
+
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-WebServerRole -All
