@@ -1,8 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - none
 
@@ -53,3 +48,15 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'AzureTestProject'
     publishLocation: 'Container'
+
+- task: DownloadBuildArtifacts@0
+  inputs:
+    buildType: 'current'
+    downloadType: 'single'
+    artifactName: 'AzureTestProject'
+    downloadPath: '$(System.DefaultWorkingDirectory)'
+
+- task: IISWebAppDeploymentOnMachineGroup@0
+  inputs:
+    WebAppName: 'YourWebAppName'
+    Package: '$(System.DefaultWorkingDirectory)/_AzureTestProject/**/*.zip'
