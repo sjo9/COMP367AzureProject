@@ -23,3 +23,14 @@ Enable-WindowsOptionalFeature -Online -FeatureName IIS-WebServerRole -All
 2025-04-04T23:42:08.7364151Z ==============================================================================
 2025-04-04T23:42:09.8966718Z ##[error]Error: No package found with specified pattern.<br/>Check if the package mentioned in the task is published as an artifact in the build or a previous stage and downloaded in the current job.
 2025-04-04T23:42:09.9130385Z ##[section]Finishing: IIS Web App Deploy
+
+2025-04-04T23:50:09.6339445Z ##[section]Starting: IIS Web App Deploy
+2025-04-04T23:50:09.6386268Z ==============================================================================
+2025-04-04T23:50:09.6386815Z Task         : IIS web app deploy
+2025-04-04T23:50:09.6387066Z Description  : Deploy a website or web application using Web Deploy
+2025-04-04T23:50:09.6387646Z Version      : 0.246.1
+2025-04-04T23:50:09.6387921Z Author       : Microsoft Corporation
+2025-04-04T23:50:09.6388183Z Help         : https://docs.microsoft.com/azure/devops/pipelines/tasks/deploy/iis-web-app-deployment-on-machine-group
+2025-04-04T23:50:09.6388735Z ==============================================================================
+2025-04-04T23:50:10.8855913Z ##[error]Error: No package found with specified pattern.<br/>Check if the package mentioned in the task is published as an artifact in the build or a previous stage and downloaded in the current job.
+2025-04-04T23:50:10.8879283Z ##[section]Finishing: IIS Web App Deploy
