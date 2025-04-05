@@ -49,20 +49,10 @@ steps:
     ArtifactName: 'AzureTestProject'
     publishLocation: 'Container'
 
-- task: DownloadBuildArtifacts@0
-  inputs:
-    buildType: 'current'
-    downloadType: 'single'
-    artifactName: 'AzureTestProject'
-    downloadPath: '$(System.DefaultWorkingDirectory)'
-
 - task: IISWebAppDeploymentOnMachineGroup@0
   displayName: 'Deploy IIS Web App'
   inputs:
-    WebSiteName: 'Default Web Site'  # 웹 사이트 이름
-    Package: '$(Build.ArtifactStagingDirectory)/AzureTestProject.zip'  # 배포할 패키지 경로
-    RemoveAdditionalFiles: false
+    WebSiteName: 'Default Web Site'  # 웹사이트 이름
+    Package: '$(Build.ArtifactStagingDirectory)/AzureTestProject/AzureTestProject.zip'  # 빌드 아티팩트 경로
+    AppPool: 'DefaultAppPool'  # 앱 풀 이름
     TakeAppOfflineFlag: true
-    AdditionalArguments: '-setParam:name="IIS Web Application Name",value="Default Web Site"'
-    # 선택 사항: Application Pool 지정 (기본적으로 DefaultAppPool이 사용됨)
-    AppPool: 'DefaultAppPool'  # 필요시 Application Pool 설정
