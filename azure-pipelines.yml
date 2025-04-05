@@ -58,5 +58,5 @@ steps:
 
 - task: IISWebAppDeploymentOnMachineGroup@0
   inputs:
-    WebAppName: 'AzureTestProject'
+    WebAppName: 'Default Web Site'
     Package: '$(System.DefaultWorkingDirectory)/_AzureTestProject/**/*.zip'
