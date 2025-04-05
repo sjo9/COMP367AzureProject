@@ -1,3 +1,8 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
 trigger:
 - none
 
@@ -9,15 +14,12 @@ variables:
   buildConfiguration: 'Release'
   solution: '**/RoundTheCode.AzureTestProject.sln'
   project: '**/RoundTheCode.AzureTestProject.csproj'
-  artifactStagingDirectory: '$(Build.ArtifactStagingDirectory)'  # Azure DevOps의 빌드 아티팩트 디렉토리 사용
 
 steps:
-# NuGet Tool 설치
 - task: NuGetToolInstaller@1
   name: 'NuGetToolInstaller'
   displayName: 'NuGet tool installer'
 
-# NuGet 패키지 복원
 - task: NuGetCommand@2
   name: 'NuGetRestore'
   displayName: 'NuGet restore packages'
@@ -26,7 +28,6 @@ steps:
     restoreSolution: '$(solution)'
     feedsToUse: 'select'
 
-# 테스트 실행
 - task: DotNetCoreCLI@2
   name: 'Tests'
   displayName: 'Run tests'
@@ -35,7 +36,6 @@ steps:
     projects: '$(solution)'
     arguments: '--configuration $(BuildConfiguration)'
 
-# 프로젝트 게시
 - task: DotNetCoreCLI@2
   name: 'Publish'
   displayName: 'Publish'
@@ -43,23 +43,13 @@ steps:
     command: 'publish'
     publishWebProjects: false
     projects: '$(project)'
-    arguments: '--configuration $(BuildConfiguration) --output $(artifactStagingDirectory)'  # 빌드 아티팩트를 Azure DevOps 아티팩트 디렉토리로 출력
-    zipAfterPublish: true
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: false
 
-# 빌드 아티팩트 게시
 - task: PublishBuildArtifacts@1
   name: 'PublishBuildArtifacts'
   displayName: 'Publish build artifacts'
   inputs:
-    PathtoPublish: '$(artifactStagingDirectory)'  # Azure DevOps 내에서 생성된 빌드 아티팩트 경로
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'AzureTestProject'
     publishLocation: 'Container'
-
-# IIS 웹 애플리케이션 배포
-- task: IISWebAppDeploymentOnMachineGroup@0
-  displayName: 'Deploy IIS Web App'
-  inputs:
-    WebSiteName: 'Default Web Site'  # 웹사이트 이름
-    Package: '$(Build.ArtifactStagingDirectory)/AzureTestProject.zip'  # Azure DevOps 빌드 아티팩트 경로
-    AppPool: 'DefaultAppPool'  # 앱 풀 이름
-    TakeAppOfflineFlag: true
