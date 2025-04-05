@@ -57,6 +57,12 @@ steps:
     downloadPath: '$(System.DefaultWorkingDirectory)'
 
 - task: IISWebAppDeploymentOnMachineGroup@0
+  displayName: 'Deploy IIS Web App'
   inputs:
-    WebAppName: 'Default Web Site'
-    Package: '$(System.DefaultWorkingDirectory)/_AzureTestProject/**/*.zip'
+    WebSiteName: 'Default Web Site'  # 웹 사이트 이름
+    Package: '$(Build.ArtifactStagingDirectory)/AzureTestProject.zip'  # 배포할 패키지 경로
+    RemoveAdditionalFiles: false
+    TakeAppOfflineFlag: true
+    AdditionalArguments: '-setParam:name="IIS Web Application Name",value="Default Web Site"'
+    # 선택 사항: Application Pool 지정 (기본적으로 DefaultAppPool이 사용됨)
+    AppPool: 'DefaultAppPool'  # 필요시 Application Pool 설정
