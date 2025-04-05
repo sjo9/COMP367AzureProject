@@ -9,7 +9,7 @@ variables:
   buildConfiguration: 'Release'
   solution: '**/RoundTheCode.AzureTestProject.sln'
   project: '**/RoundTheCode.AzureTestProject.csproj'
-  artifactStagingDirectory: 'C:\build_artifacts'  # 로컬 경로
+  artifactStagingDirectory: '$(Build.ArtifactStagingDirectory)'  # Azure DevOps의 빌드 아티팩트 디렉토리 사용
 
 steps:
 # NuGet Tool 설치
@@ -43,15 +43,15 @@ steps:
     command: 'publish'
     publishWebProjects: false
     projects: '$(project)'
-    arguments: '--configuration $(BuildConfiguration) --output $(artifactStagingDirectory)'  # 로컬 경로로 출력
+    arguments: '--configuration $(BuildConfiguration) --output $(artifactStagingDirectory)'  # 빌드 아티팩트를 Azure DevOps 아티팩트 디렉토리로 출력
     zipAfterPublish: true
 
-# 빌드 아티팩트 게시 (로컬 폴더로)
+# 빌드 아티팩트 게시
 - task: PublishBuildArtifacts@1
   name: 'PublishBuildArtifacts'
   displayName: 'Publish build artifacts'
   inputs:
-    PathtoPublish: '$(artifactStagingDirectory)'  # 로컬 경로
+    PathtoPublish: '$(artifactStagingDirectory)'  # Azure DevOps 내에서 생성된 빌드 아티팩트 경로
     ArtifactName: 'AzureTestProject'
     publishLocation: 'Container'
 
@@ -60,6 +60,6 @@ steps:
   displayName: 'Deploy IIS Web App'
   inputs:
     WebSiteName: 'Default Web Site'  # 웹사이트 이름
-    Package: '$(artifactStagingDirectory)/AzureTestProject/AzureTestProject.zip'  # 빌드 아티팩트 경로
+    Package: '$(Build.ArtifactStagingDirectory)/AzureTestProject.zip'  # Azure DevOps 빌드 아티팩트 경로
     AppPool: 'DefaultAppPool'  # 앱 풀 이름
     TakeAppOfflineFlag: true
